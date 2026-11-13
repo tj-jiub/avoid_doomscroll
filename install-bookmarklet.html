@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SocialLite 북마클릿 설치</title>
+<meta name="theme-color" content="#08090C">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+<style>
+  .wrap { max-width: 720px; margin: 0 auto; padding: 22px 18px calc(50px + env(safe-area-inset-bottom, 0px)); position: relative; z-index: 1; }
+  .back { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--mut); text-decoration: none; margin-bottom: 18px; }
+  .back:hover { color: var(--tx); }
+  .big-step { display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+  .big-step:first-of-type { border-top: 0; }
+  .big-step .n { flex: 0 0 26px; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
+    font-size: 12px; font-weight: 800; background: var(--accent-soft); color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+  .big-step > div > b { display: block; font-size: 13.5px; margin-bottom: 3px; }
+  .big-step p { margin: 0; font-size: 12.5px; color: var(--mut); line-height: 1.6; }
+  .preview { margin-top: 14px; border: 1px dashed var(--line-strong); border-radius: 12px; padding: 12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: var(--mut);
+    word-break: break-all; line-height: 1.5; max-height: 96px; overflow: hidden; }
+  .size { font-size: 11px; color: var(--mut); margin-top: 6px; }
+  .note { margin-top: 16px; font-size: 11.5px; color: var(--mut); line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+<div class="wrap">
+  <a class="back" href="index.html">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m14 6-6 6 6 6"/></svg>
+    대시보드로
+  </a>
+
+  <p class="eyebrow">BOOKMARKLET</p>
+  <h1 style="font-size:clamp(26px,7vw,34px);letter-spacing:-.03em;margin:0 0 10px;line-height:1.15">
+    북마크 하나로<br>릴스를 끄는 방법
+  </h1>
+  <p class="lede" style="margin-bottom:20px">설치 없이 쓰는 방법입니다. 인스타그램을 열어 둔 상태에서 북마크를 누르면 그 자리에서 릴스가 사라집니다. 새로고침하면 다시 켜지므로, 필요할 때마다 눌러 주세요.</p>
+
+  <section class="card">
+    <div class="big-step">
+      <span class="n">1</span>
+      <div><b>아래 코드를 복사</b><p>버튼 한 번이면 복사됩니다. 코드가 길어 보여도 정상입니다(약 <span id="size">—</span>).</p></div>
+    </div>
+    <div class="big-step">
+      <span class="n">2</span>
+      <div><b>아무 페이지나 북마크</b><p>사파리·크롬에서 이 페이지를 북마크에 추가하세요. 이름은 <b>SocialLite</b>로.</p></div>
+    </div>
+    <div class="big-step">
+      <span class="n">3</span>
+      <div><b>북마크 주소를 바꿔치기</b><p>북마크 편집 › 주소(URL) 칸을 모두 지우고 복사한 코드를 붙여넣고 저장합니다. <b>javascript:</b> 로 시작해야 합니다.</p></div>
+    </div>
+    <div class="big-step">
+      <span class="n">4</span>
+      <div><b>인스타그램에서 실행</b><p>instagram.com을 연 뒤 북마크 목록에서 <b>SocialLite</b>를 선택하세요. 하단 바의 릴스가 사라집니다. 오른쪽 아래 <b>SL</b> 버튼에서 설정을 바꿀 수 있습니다.</p></div>
+    </div>
+
+    <div class="actions" style="margin-top:14px">
+      <button id="copy" class="btn primary" type="button">북마클릿 코드 복사</button>
+      <a class="btn ghost" href="bookmarklet.js" download="bookmarklet.js">코드 파일로 저장</a>
+    </div>
+
+    <div class="preview" id="preview">불러오는 중…</div>
+    <p class="size">※ iOS 사파리는 주소창에 <b>javascript:</b> 를 직접 입력하는 것이 막혀 있어, 위처럼 <b>북마크를 편집</b>하는 방식으로 넣습니다.</p>
+    <p class="note">이 코드는 인스타그램 페이지 안에서만 동작하며, 계정 정보를 읽거나 어디로 보내지 않습니다. 코드를 실행하면 페이지에 스타일과 감시자만 추가됩니다.</p>
+  </section>
+</div>
+
+<div id="toast" class="toast" role="status"></div>
+<script>
+(function () {
+  var code = "";
+  var preview = document.getElementById("preview");
+  var size = document.getElementById("size");
+  var toastEl = document.getElementById("toast");
+  function toast(msg) {
+    toastEl.textContent = msg; toastEl.classList.add("show");
+    clearTimeout(toast._t); toast._t = setTimeout(function () { toastEl.classList.remove("show"); }, 2000);
+  }
+  fetch("bookmarklet.js", { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (txt) {
+    code = txt.trim();
+    preview.textContent = code.slice(0, 220) + " …";
+    size.textContent = Math.round(code.length / 1024) + "KB";
+  }).catch(function () {
+    preview.textContent = "코드를 불러오지 못했습니다. 로컬 서버(serve.sh)로 열었는지 확인하세요.";
+  });
+  document.getElementById("copy").addEventListener("click", function () {
+    if (!code) return toast("아직 코드를 못 불러왔어요");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(function () { toast("복사했어요. 북마크 주소에 붙여넣으세요"); },
+        function () { toast("복사가 막혔어요. 코드 파일로 저장을 사용하세요"); });
+    } else {
+      toast("복사가 막혔어요. 코드 파일로 저장을 사용하세요");
+    }
+  });
+})();
+</script>
+</body>
+</html>

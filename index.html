@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SocialLite — 릴스 없는 인스타그램</title>
+<meta name="description" content="인스타그램에서 릴스(숏폼 무한 피드)만 걷어내고 피드·스토리·DM·프로필은 그대로 쓰는 집중형 소셜 뷰.">
+<meta name="theme-color" content="#0A0B0E" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F7F8FA" media="(prefers-color-scheme: light)">
+
+<!-- iOS 홈 화면 앱(Standalone) -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SocialLite">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-startup-image" href="icons/splash-1179x2556.png"
+      media="(device-width:393px) and (device-height:852px) and (-webkit-device-pixel-ratio:3)">
+<link rel="apple-touch-startup-image" href="icons/splash-1170x2532.png"
+      media="(device-width:390px) and (device-height:844px) and (-webkit-device-pixel-ratio:3)">
+<link rel="apple-touch-startup-image" href="icons/splash-1290x2796.png"
+      media="(device-width:430px) and (device-height:932px) and (-webkit-device-pixel-ratio:3)">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+        <path d="M8.4 5.4v13.2c0 .53.58.85 1.03.57l10-6.6a.68.68 0 0 0 0-1.14l-10-6.6a.68.68 0 0 0-1.03.57Z" fill="currentColor" opacity=".25"/>
+        <path d="M4 20 20 4" stroke="#7AEBC8" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <span class="name">SocialLite</span>
+    <span class="ver">v1.0</span>
+  </div>
+  <div class="top-actions">
+    <span class="live" id="live"><i></i><span>보호 중</span></span>
+    <button class="icon-btn" id="theme" type="button" aria-label="테마 바꾸기">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+        <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>
+        <circle cx="12" cy="12" r="3.6"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">INSTAGRAM WITHOUT REELS</p>
+      <h1>릴스는 빼고,<br><span class="accent">사람은 남기고.</span></h1>
+      <p class="lede">피드 · 스토리 · DM · 프로필은 그대로.<br>무한 릴스 스크롤만 정확히 도려냅니다.</p>
+
+      <div class="cta">
+        <button id="launch" class="btn primary" type="button">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/>
+          </svg>
+          릴스 없는 인스타그램 열기
+        </button>
+        <button id="goto-install" class="btn ghost" type="button">설치 방법</button>
+      </div>
+
+      <ul class="chips" aria-label="유지되는 기능과 제거되는 기능">
+        <li class="keep">피드</li>
+        <li class="keep">스토리</li>
+        <li class="keep">DM</li>
+        <li class="keep">프로필</li>
+        <li class="cut"><span>릴스</span></li>
+      </ul>
+      <p class="hero-note" id="hero-note">설치 전이라면, 열리는 건 평소의 인스타그램입니다.</p>
+    </div>
+
+    <div class="mock" aria-hidden="true">
+      <div class="phone">
+        <div class="ph-bar">
+          <span class="ph-logo">SocialLite</span>
+          <span class="ph-pill">릴스 0</span>
+        </div>
+        <div class="ph-stories">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="ph-post">
+          <div class="ph-head"><i></i><em></em></div>
+          <div class="ph-img"></div>
+          <div class="ph-meta"><b></b><b class="w60"></b></div>
+        </div>
+        <div class="ph-post slim">
+          <div class="ph-head"><i></i><em></em></div>
+          <div class="ph-img short"></div>
+        </div>
+        <div class="ph-nav">
+          <span class="on"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5 12 3l9 7.5V21H3z"/></svg></span>
+          <span><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span>
+          <span><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H9l-5 4z"/></svg></span>
+          <span><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c1.2-3.6 4-5.2 7.2-5.2S18 16.4 19.2 20"/></svg></span>
+          <span class="gone" title="릴스 제거됨">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M10 8.8 15.4 12 10 15.2z"/><path d="M4 20 20 4" stroke="#7AEBC8"/></svg>
+          </span>
+        </div>
+      </div>
+      <span class="mock-tag">릴스 탭 없음</span>
+    </div>
+  </section>
+
+  <section class="card" id="controls">
+    <header class="card-hd">
+      <h2>차단 설정</h2>
+      <span class="hint" id="rule-count">8개 규칙</span>
+    </header>
+    <div class="toggles" id="toggles"></div>
+
+    <div class="select-row">
+      <div>
+        <label for="redirect">막힌 릴스 주소가 갈 곳</label>
+        <p>릴스 링크를 눌렀을 때 튕겨 보낼 화면</p>
+      </div>
+      <select id="redirect">
+        <option value="/">홈 피드</option>
+        <option value="/direct/inbox/">DM 받은편지함</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="card" id="install">
+    <header class="card-hd">
+      <h2>1분 설치</h2>
+      <span class="hint" id="install-hint">차단은 인스타그램 안에서 동작합니다</span>
+    </header>
+
+    <div class="tabs" role="tablist" aria-label="설치 방법">
+      <button role="tab" class="tab on" data-tab="ios" aria-selected="true">iOS 사파리</button>
+      <button role="tab" class="tab" data-tab="orion" aria-selected="false">Orion</button>
+      <button role="tab" class="tab" data-tab="desktop" aria-selected="false">데스크톱</button>
+      <button role="tab" class="tab" data-tab="shortcuts" aria-selected="false">단축어</button>
+      <button role="tab" class="tab" data-tab="bookmark" aria-selected="false">북마클릿</button>
+    </div>
+
+    <div class="tab-body" id="tab-ios">
+      <p class="tab-note">iPhone에서는 <b>Userscripts</b>(무료) 앱이 가장 간단합니다. 앱이 사파리 확장으로 인스타그램 페이지에 이 스크립트를 넣어 줍니다.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><b>Userscripts 설치</b><p>App Store에서 <em>Userscripts</em>를 받고, 설정 › 앱 › Safari › 확장 프로그램에서 켠 뒤 <em>instagram.com</em> 접근을 허용하세요.</p></div></li>
+        <li><span class="n">2</span><div><b>스크립트 넣기</b><p>아래 <em>파일로 저장</em>을 누르고, 파일 앱에서 Userscripts 폴더로 옮기면 목록에 나타납니다. (앱에 편집기가 있으면 <em>복사</em>한 내용을 붙여넣어도 됩니다.)</p></div></li>
+        <li><span class="n">3</span><div><b>인스타그램 열기</b><p>사파리에서 instagram.com을 열면 하단 바에서 릴스가 사라집니다. 오른쪽 아래 <b>SL</b> 버튼이 설정 패널입니다.</p></div></li>
+      </ol>
+      <div class="actions">
+        <button id="copy-script" class="btn primary sm" type="button">유저스크립트 복사</button>
+        <button id="download-script" class="btn ghost sm" type="button">파일로 저장</button>
+      </div>
+      <p class="fine">이 앱을 <b>홈 화면에 추가</b>하면 주소창 없는 앱처럼 열립니다. 사파리 공유 버튼 › 홈 화면에 추가.<br>
+홈 화면 설치는 <b>https 주소</b>(또는 localhost)에서만 동작합니다. README의 “배포”를 참고하세요.</p>
+    </div>
+
+    <div class="tab-body hidden" id="tab-orion">
+      <p class="tab-note">Orion 브라우저는 유저스크립트를 기본 지원합니다.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><b>설정 열기</b><p>Orion › 설정 › 확장 프로그램 › Userscripts.</p></div></li>
+        <li><span class="n">2</span><div><b>붙여넣기</b><p><em>유저스크립트 복사</em> 후 + 버튼에 붙여넣고 저장하세요.</p></div></li>
+        <li><span class="n">3</span><div><b>적용 확인</b><p>instagram.com을 열고 새로고침. 릴스 탭이 사라졌는지 확인하세요.</p></div></li>
+      </ol>
+      <div class="actions">
+        <button class="btn primary sm" data-copy-script type="button">유저스크립트 복사</button>
+        <a class="btn ghost sm" href="socialite.user.js" download="socialite.user.js">파일 내려받기</a>
+      </div>
+    </div>
+
+    <div class="tab-body hidden" id="tab-desktop">
+      <p class="tab-note">Chrome · Edge · Firefox · 사파리(맥) 모두 같은 방법입니다.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><b>Tampermonkey 설치</b><p>확장 프로그램 스토어에서 Tampermonkey 또는 Violentmonkey를 설치하세요.</p></div></li>
+        <li><span class="n">2</span><div><b>새 스크립트</b><p>대시보드 아이콘 › 새 스크립트 만들기 › 기본 내용을 지우고 복사한 코드를 붙여넣고 저장(Ctrl+S).</p></div></li>
+        <li><span class="n">3</span><div><b>인스타그램 새로고침</b><p>주소창 옆 확장 아이콘에 숫자 1이 보이면 동작 중입니다.</p></div></li>
+      </ol>
+      <div class="actions">
+        <button class="btn primary sm" data-copy-script type="button">유저스크립트 복사</button>
+        <a class="btn ghost sm" href="socialite.user.js" download="socialite.user.js">파일 내려받기</a>
+      </div>
+    </div>
+
+
+    <div class="tab-body hidden" id="tab-shortcuts">
+      <p class="tab-note">iOS <b>단축어</b> 앱과 묶으면 인스타그램 앱에서 링크를 받아 안전 모드로 열거나, 홈 화면에 전용 실행 아이콘을 만들 수 있습니다.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><b>릴스 없는 인스타 열기</b><p>단축어 앱 › 새 단축어 › <em>URL 열기</em> 동작을 추가하고 아래 <em>실행 URL 복사</em>로 넣은 주소를 붙여넣으세요. 이름을 “릴스 없는 인스타”로 저장하고 홈 화면에 추가하면 끝.</p></div></li>
+        <li><span class="n">2</span><div><b>공유 시트로 받은 릴스 열기</b><p>새 단축어 › <em>단축어 입력 받기(URL)</em> › <em>텍스트의</em> … 단계로 <code>/reel/</code> 주소를 그대로 <em>URL 열기</em>에 넘깁니다. 인스타그램 앱의 공유 › 단축어로 실행하면 사파리가 안전 모드로 한 편만 엽니다.</p></div></li>
+        <li><span class="n">3</span><div><b>자동화(선택)</b><p>단축어 › 자동화 › 앱 열림에서 인스타그램을 고르고 “릴스 없는 인스타”를 실행하게 하면, 앱을 열 때마다 사파리로 넘어갑니다. (자동화는 iOS가 확인을 요구할 수 있습니다.)</p></div></li>
+      </ol>
+      <div class="actions">
+        <button id="copy-launch-url" class="btn primary sm" type="button">실행 URL 복사</button>
+        <button id="copy-reel-snippet" class="btn ghost sm" type="button">릴스 링크 예시 복사</button>
+      </div>
+      <p class="fine">단축어는 “어디로 열지”만 정합니다. 릴스를 실제로 걷어내는 일은 설치된 유저스크립트가 합니다.</p>
+    </div>
+
+    <div class="tab-body hidden" id="tab-bookmark">
+      <p class="tab-note">설치 없이 한 번씩 실행하는 방법입니다. 새로고침하면 풀리므로 매번 눌러야 합니다.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><b>코드 복사</b><p>아래 버튼으로 <em>javascript:</em> 코드를 복사합니다.</p></div></li>
+        <li><span class="n">2</span><div><b>북마크 만들기</b><p>아무 페이지나 북마크한 뒤, 북마크를 편집해 주소(URL) 칸을 복사한 코드로 바꾸고 이름을 <b>SocialLite</b>로 저장하세요.</p></div></li>
+        <li><span class="n">3</span><div><b>인스타그램에서 실행</b><p>instagram.com을 연 상태에서 그 북마크를 선택하면 바로 적용됩니다.</p></div></li>
+      </ol>
+      <div class="actions">
+        <button id="copy-bookmarklet" class="btn primary sm" type="button">북마클릿 복사</button>
+        <a class="btn ghost sm" href="install-bookmarklet.html">설치 도우미 열기</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="ready">
+    <header class="card-hd">
+      <h2>준비 상태</h2>
+      <span class="hint" id="ready-hint">0 / 2</span>
+    </header>
+    <label class="check"><input type="checkbox" data-check="installed"><span>유저스크립트를 설치했어요</span></label>
+    <label class="check"><input type="checkbox" data-check="verified"><span>인스타그램에서 릴스 탭이 사라진 걸 확인했어요</span></label>
+    <p class="fine">이 앱은 인스타그램 화면을 직접 볼 수 없어서, 설치 여부는 직접 확인해 주세요.</p>
+  </section>
+
+  <section class="card">
+    <details class="adv">
+      <summary>고급 — 단일 릴스 열기 · 설정 코드</summary>
+      <div class="adv-body">
+        <label class="field">
+          <span>DM으로 받은 릴스 링크</span>
+          <input id="reel-link" type="url" inputmode="url" placeholder="https://www.instagram.com/reel/ABC123/">
+        </label>
+        <button id="open-single" class="btn ghost sm" type="button">안전 모드로 열기 (1편만)</button>
+
+        <div class="code-box">
+          <code id="cfg-code">—</code>
+          <button id="copy-cfg" class="icon-btn" type="button" aria-label="설정 코드 복사">복사</button>
+        </div>
+        <div class="actions">
+          <button id="import-cfg" class="btn ghost sm" type="button">코드 붙여넣어 불러오기</button>
+          <button id="reset" class="btn ghost sm" type="button">기본값으로</button>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section class="card test-card">
+    <div>
+      <h2>자체 검증</h2>
+      <p>릴스 탭 · 피드 릴스 · <code>/reels/</code> 리다이렉트가 실제 DOM에서 동작하는지, DM·스토리·프로필이 망가지지 않는지 100개 넘는 항목으로 확인합니다.</p>
+    </div>
+    <a class="btn ghost sm" href="tests/index.html">테스트 실행</a>
+  </section>
+
+  <footer>
+    <p>인스타그램 공식 앱이 아닙니다. 로그인 정보나 대화 내용을 어디로도 보내지 않으며, 모든 처리는 이 기기와 인스타그램 페이지 안에서만 이뤄집니다.</p>
+    <p class="tiny">SocialLite PWA · v1.0 · 오프라인 지원 · <span id="sw-state">준비 중</span></p>
+  </footer>
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="reels-blocker.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

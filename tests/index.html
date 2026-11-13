@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>SocialLite 테스트</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #0b0c10; color: #eef0f4;
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 28px 18px 80px; }
+  h1 { font-size: 22px; letter-spacing: -.02em; margin: 0 0 4px; }
+  .sub { color: #8b909c; font-size: 13px; margin-bottom: 18px; }
+  .summary { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px;
+    background: #14161c; border: 1px solid rgba(255,255,255,.07); margin-bottom: 18px; }
+  .badge { font-weight: 700; font-size: 14px; padding: 5px 10px; border-radius: 9px; background: #2a2d36; color: #e7e9ee; }
+  .badge.pass { background: #7aebc8; color: #0b0c10; }
+  .badge.fail { background: #ff6b6b; color: #14060a; }
+  .bar { flex: 1; height: 8px; border-radius: 4px; background: #23262f; overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: #7aebc8; width: 0; transition: width .3s; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: #8b909c; margin: 22px 0 8px; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { display: flex; gap: 9px; padding: 7px 10px; border-radius: 10px; font-size: 13.5px; align-items: flex-start; }
+  li:nth-child(odd) { background: rgba(255,255,255,.025); }
+  li .m { flex: 0 0 16px; font-weight: 700; }
+  li.ok .m { color: #7aebc8; }
+  li.no .m { color: #ff8585; }
+  li .d { color: #8b909c; font-size: 12px; margin-left: 4px; }
+  li.no .d { color: #ffb3b3; }
+  iframe.stage { position: fixed; left: -2000px; top: 0; width: 430px; height: 900px; border: 0; }
+  button { background: #7aebc8; color: #0b0c10; border: 0; border-radius: 11px; padding: 9px 14px;
+    font-weight: 700; font-size: 13px; cursor: pointer; }
+  a { color: #7aebc8; }
+  .note { color: #8b909c; font-size: 12.5px; margin-top: 22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>SocialLite 검증</h1>
+  <div class="sub">릴스 차단 엔진이 실제 DOM에서 동작하는지 확인합니다. 실제 인스타그램 구조를 흉내 낸 가짜 페이지를 씁니다.</div>
+  <div class="summary">
+    <span id="badge" class="badge">실행 중…</span>
+    <div class="bar"><i id="bar"></i></div>
+    <span id="count" class="sub" style="margin:0; font-size:12px"></span>
+    <button id="again">다시 실행</button>
+  </div>
+  <div id="out"></div>
+  <div class="note">
+    ※ 이 페이지는 앱의 <b>진단</b> 화면입니다. 실제 인스타그램에 적용하려면 <a href="../index.html">대시보드</a>에서 유저스크립트를 설치하세요.
+  </div>
+</div>
+<script src="../reels-blocker.js"></script>
+<script src="fixtures.js"></script>
+<script src="../test_blocker.js"></script>
+</body>
+</html>

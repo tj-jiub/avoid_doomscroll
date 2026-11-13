@@ -1,0 +1,18 @@
+{
+  "name": "socialite-instagram",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SocialLite — 인스타그램에서 릴스만 걷어내는 PWA 대시보드 + 유저스크립트 (SocialLite 스타일)",
+  "keywords": ["instagram", "reels", "userscript", "pwa", "focus", "digital-wellbeing"],
+  "license": "MIT",
+  "scripts": {
+    "start": "./serve.sh",
+    "serve": "python3 -m http.server 5173",
+    "build": "python3 build.py",
+    "icons": "python3 tools/make_icons.py",
+    "test": "python3 build.py && python3 tools/run_tests.py"
+  },
+  "engines": {
+    "node": ">=18 (선택: 없으면 파이썬 스크립트만으로 동작합니다)"
+  }
+}

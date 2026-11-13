@@ -1,0 +1,66 @@
+/*!
+ * SocialLite Reels Blocker — 정적 CSS 베이스라인
+ * ------------------------------------------------------------------
+ * reels-blocker.js가 실행 중에 만들어 넣는 스타일과 같은 규칙을
+ * "기본 설정 전부 켜짐" 상태로 미리 적어 둔 파일이다.
+ *
+ * 이런 경우에 쓴다:
+ *   · JS 주입 없이 CSS만 넣고 싶을 때 (Stylus, Orion 사용자 스타일 등)
+ *   · 엔진이 첫 스윕을 돌기 전 깜빡임(FOUC)을 막고 싶을 때
+ *
+ * 선택자 원칙: 인스타그램의 해시 클래스는 쓰지 않는다.
+ *              href / aria-label / role / 태그 구조만 쓴다.
+ */
+
+/* JS가 붙이는 숨김 표식 */
+[data-sl-hidden] {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* ── 1. 릴스 탭: 하단 내비게이션 바 · 데스크톱 사이드바 · 상단 탭 ── */
+a[href="/reels/"],
+a[href="/reels"] {
+  display: none !important;
+}
+a:has(> svg[aria-label="Reels"]),
+a:has(> svg[aria-label="릴스"]) {
+  display: none !important;
+}
+svg[aria-label="Reels"],
+svg[aria-label="릴스"] {
+  display: none !important;
+}
+[role="tab"][aria-label="Reels"],
+[role="tab"][aria-label="릴스"],
+[role="navigation"] a[href^="/reels/"],
+[role="tablist"] a[href^="/reels/"],
+header a[href^="/reels/"],
+nav a[href^="/reels/"] {
+  display: none !important;
+}
+
+/* ── 2. 프로필의 '릴스' 탭 (그리드 자체는 유지) ── */
+a[href$="/reels/"]:not([href="/reels/"]):not([href="/reels"]) {
+  display: none !important;
+}
+
+/* ── 3. 메인 피드에 섞여 들어온 릴스 유닛 ──
+   /reel/ 링크를 품은 article만 숨긴다. 사진·카드뉴스·일반 동영상 게시물은 그대로. */
+html:not(.sl-route-direct):not(.sl-single-reel) main article:has(a[href^="/reel/"]),
+html:not(.sl-route-direct):not(.sl-single-reel) main article:has(svg[aria-label="Reels"]) {
+  display: none !important;
+}
+
+/* ── 4. 탐색 피드의 릴스 셀 ── */
+html.sl-route-explore main a[href^="/reel/"] {
+  display: none !important;
+}
+
+/* ── 5. 안전 모드: DM으로 받은 단일 릴스(/reel/CODE/) 한 편만 ── */
+html.sl-single-reel [aria-label="Next"],
+html.sl-single-reel [aria-label="다음"],
+html.sl-single-reel [aria-label="Previous"],
+html.sl-single-reel [aria-label="이전"] {
+  display: none !important;
+}

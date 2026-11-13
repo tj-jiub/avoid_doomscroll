@@ -1,0 +1,8 @@
+{
+  "name": "SocialLite — Instagram without Reels",
+  "version": "1.0.0",
+  "files": {
+    "socialite.user.js": 45194,
+    "bookmarklet.js": 40684
+  }
+}

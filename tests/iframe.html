@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>SocialLite fixture</title>
+</head>
+<body>
+<script>
+  /* 부모가 넘긴 경로로 주소만 바꾼다. 페이지를 새로 불러오지는 않으므로
+     존재하지 않는 인스타그램 경로(/reels/ 등)를 그대로 흉내 낼 수 있다. */
+  (function () {
+    var m = /[?&]route=([^&]*)/.exec(location.search);
+    if (!m) return;
+    try {
+      var route = decodeURIComponent(m[1]);
+      if (route.charAt(0) === "/") history.replaceState({}, "", route);
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>

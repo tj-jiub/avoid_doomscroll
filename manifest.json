@@ -1,0 +1,36 @@
+{
+  "name": "SocialLite — 릴스 없는 인스타그램",
+  "short_name": "SocialLite",
+  "description": "인스타그램에서 릴스(숏폼 무한 피드)만 걷어내고 피드·스토리·DM·프로필은 그대로 쓰는 집중형 소셜 뷰.",
+  "lang": "ko",
+  "dir": "ltr",
+  "id": "/socialite/",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait-primary",
+  "background_color": "#08090C",
+  "theme_color": "#08090C",
+  "categories": ["social", "productivity", "lifestyle"],
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "릴스 없는 인스타그램 열기",
+      "short_name": "인스타 열기",
+      "url": "./index.html",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "자체 검증 실행",
+      "short_name": "검증",
+      "url": "./tests/index.html",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
