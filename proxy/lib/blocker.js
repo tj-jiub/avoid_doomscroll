@@ -120,12 +120,20 @@ function containerOf(el){
   return null;
 }
 function navItemFrom(el,box){
-  var n=el,i=0;
-  while(n&&n.parentElement&&i<10){
-    if(n.parentElement===box)return n;
-    n=n.parentElement;i++;
+  var n=el,best=el,i=0;
+  while(n&&n!==box&&n.parentElement&&i<10){
+    var p=n.parentElement;
+    if(p===box){
+      /* Stop before hiding a wrapper that holds multiple nav tabs (e.g. a flex row of all 5 tabs) */
+      var siblings=n.querySelectorAll?n.querySelectorAll('a[href],[role="tab"],[role="link"],[role="button"]').length:0;
+      if(siblings<=1)best=n;
+      break;
+    }
+    var pTabs=p.querySelectorAll?p.querySelectorAll('a[href],[role="tab"],[role="link"],[role="button"]').length:0;
+    if(pTabs>1)break;
+    best=p;n=p;i++;
   }
-  return el;
+  return best;
 }
 function trayOf(el){
   var n=el.parentElement,i=0,best=null;

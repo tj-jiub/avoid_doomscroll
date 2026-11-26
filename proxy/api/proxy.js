@@ -23,6 +23,7 @@ const UPSTREAM_HOST = 'www.instagram.com';
 const CDN_HOST = 'static.cdninstagram.com';
 const CDN_PREFIX = '/sl-cdn/';
 const SL_PREFIX = '/sl/';
+const AGENT = new https.Agent({ keepAlive: true, maxSockets: 32 });
 const UA_FALLBACK =
   'Mozilla/5.0 (iPhone; CPU iPhone OS 18_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.2 Mobile/15E148 Safari/604.1';
 
@@ -178,7 +179,7 @@ function readBody(req, limit) {
 function upstreamRequest({ method, host, path, headers, body }) {
   return new Promise((resolve, reject) => {
     const request = https.request(
-      { host, port: 443, method, path, headers, servername: host },
+      { host, port: 443, method, path, headers, servername: host, agent: AGENT },
       resolve
     );
     request.setTimeout(25000, () => request.destroy(new Error('upstream timeout')));
@@ -347,7 +348,10 @@ async function proxy(req, res, target) {
   if (resHeaders.location) res.setHeader('location', fixLocation(resHeaders.location));
 
   if (!isHtml && !isJs) {
-    /* binary / CSS / JSON: stream untouched */
+    /* binary / CSS / JSON: stream untouched (cache static CDN assets at Vercel Edge) */
+    if (host === CDN_HOST && status === 200) {
+      res.setHeader('cache-control', 'public, max-age=86400, s-maxage=86400');
+    }
     res.setHeader('x-sl-proxy', 'stream');
     up.pipe(res);
     return;
@@ -357,9 +361,7 @@ async function proxy(req, res, target) {
     return;
   }
 
-  /* HTML and JS: decompress, rewrite, send (JS keeps the login flow on this host:
-     instagram builds a few absolute URLs in its bundles, which would otherwise
-     become cross-origin CORS failures) */
+  /* HTML and JS: decompress, rewrite, recompress (gzip) and send */
   const chunks = [];
   await new Promise((resolve, reject) => {
     up.on('data', (c) => chunks.push(c));
@@ -371,11 +373,19 @@ async function proxy(req, res, target) {
   if (decoded) buf = decoded;
 
   const text = rewriteOrigins(buf.toString('utf8'));
-  const out = Buffer.from(isHtml ? transformHtml(text) : text, 'utf8');
+  let out = Buffer.from(isHtml ? transformHtml(text) : text, 'utf8');
   if (isHtml) res.setHeader('content-type', 'text/html; charset=utf-8');
+  if (/\bgzip\b/i.test(String(req.headers['accept-encoding'] || ''))) {
+    out = zlib.gzipSync(out, { level: 4 });
+    res.setHeader('content-encoding', 'gzip');
+    res.setHeader('vary', 'Accept-Encoding');
+  }
   res.setHeader('content-length', String(out.length));
   res.setHeader('x-sl-proxy', isHtml ? 'html' : 'js');
   if (isHtml) res.setHeader('cache-control', 'no-store');
+  else if (host === CDN_HOST && status === 200) {
+    res.setHeader('cache-control', 'public, max-age=86400, s-maxage=86400');
+  }
   res.end(out);
 }
 
