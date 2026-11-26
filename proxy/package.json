@@ -1,0 +1,12 @@
+{
+  "name": "socialite-proxy",
+  "version": "3.0.0",
+  "private": true,
+  "description": "SocialLite — Vercel Serverless reverse proxy that serves Instagram Web with Reels removed (no bookmarklet, no extension)",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "dev": "node dev/server.js",
+    "test": "node dev/check-local.js"
+  }
+}
