@@ -60,6 +60,10 @@ html:not(.sl-off) [role="tab"][aria-label*="reel" i],html:not(.sl-off) [role="ta
 html:not(.sl-off) [role="tablist"] a[href*="/reel"]{display:none!important}
 html:not(.sl-off) nav a[href*="/reel"],html:not(.sl-off) [role="navigation"] a[href*="/reel"]{display:none!important}
 html:not(.sl-off) header a[href*="/reel"],html:not(.sl-off) footer a[href*="/reel"]{display:none!important}
+html:not(.sl-off) a[href*="/stories/"],
+html:not(.sl-off) [aria-label*="스토리" i],
+html:not(.sl-off) [aria-label*="story" i],
+html:not(.sl-off) [aria-label*="stories" i]{display:none!important}
 `;
 
 const JS = `
@@ -188,6 +192,37 @@ function labelIsReels(el){
   return REELWORD.test(a);
 }
 
+function storyTrayOf(el){
+  var n=el.parentElement,i=0,best=null;
+  while(n&&n!==D.body&&i<6){
+    if(n.matches&&n.matches('main,[role="main"],nav,[role="navigation"]'))break;
+    if(n.querySelectorAll){
+      var st=n.querySelectorAll('[aria-label*="스토리" i],[aria-label*="story" i],[aria-label*="stories" i],a[href*="/stories/"]').length;
+      var arts=n.querySelectorAll('article,[role="article"]').length;
+      if(arts===0&&st>=2)best=n;
+    }
+    n=n.parentElement;i++;
+  }
+  return best;
+}
+function sweepStories(){
+  var st=q('[aria-label*="스토리" i],[aria-label*="story" i],[aria-label*="stories" i],a[href*="/stories/"]');
+  for(var i=0;i<st.length;i++){
+    var tr=storyTrayOf(st[i]);
+    if(tr)mark(tr,"story","tray");
+    else mark(st[i],"story");
+  }
+  /* hide Instagram's blocking "앱 사용 / Use the app" modal if present */
+  var dlgs=q('[role="dialog"]');
+  for(var j=0;j<dlgs.length;j++){
+    var t=txt(dlgs[j]);
+    if(t.length>0&&t.length<240&&/(앱 사용|앱에서 열기|Instagram 앱|Open in app|Use the app)/i.test(t)){
+      var closeBtn=dlgs[j].querySelector('button[aria-label*="닫기" i],button[aria-label*="Close" i],[role="button"][aria-label*="닫기" i]');
+      if(closeBtn){try{closeBtn.click();}catch(e){}}
+      else mark(dlgs[j],"app-modal");
+    }
+  }
+}
 function sweep(){
   if(!S.on||!D.body)return;
   var i,el,p,as=q("a[href]");
@@ -202,6 +237,7 @@ function sweep(){
   for(i=0;i<zones.length;i++){
     if(textIsReels(zones[i]))handleReel(zones[i],"text");
   }
+  sweepStories();
   paint();
 }
 
