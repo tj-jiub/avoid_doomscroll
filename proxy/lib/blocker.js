@@ -137,14 +137,15 @@ function navItemFrom(el,box){
 }
 function trayOf(el){
   var n=el.parentElement,i=0,best=null;
-  while(n&&n!==D.body&&i<8){
+  while(n&&n!==D.body&&i<6){
     if(n.matches&&n.matches('main,[role="main"],nav,[role="navigation"]'))break;
     if(n.querySelectorAll){
       var reels=n.querySelectorAll('a[href*="/reel"]').length;
       var all=n.querySelectorAll('a[href]').length;
       var arts=n.querySelectorAll('article,[role="article"]').length;
-      /* a tray is almost all reels; a mixed explore grid is not */
-      if(arts===0&&reels>=3&&all<=16&&reels/all>=0.75)best=n;
+      var imgs=n.querySelectorAll('img').length;
+      /* a tray is almost all reels; never hide a feed container that holds normal posts or many links */
+      if(arts===0&&reels>=3&&all<=16&&reels/all>=0.75&&imgs<=reels*2)best=n;
     }
     n=n.parentElement;i++;
   }
@@ -153,14 +154,15 @@ function trayOf(el){
 /* a reel card whose wrapper is not an <article> (modern mobile feed) */
 function cardOf(el){
   var n=el,best=el,i=0;
-  while(n&&n.parentElement&&i<6){
+  while(n&&n.parentElement&&i<5){
     var p=n.parentElement;
-    if(p.matches&&p.matches('main,[role="main"],body,nav,[role="navigation"]'))break;
+    if(p.matches&&p.matches('main,[role="main"],body,nav,[role="navigation"],section'))break;
     if(!p.querySelectorAll)break;
     var reels=p.querySelectorAll('a[href*="/reel"]').length;
     var arts=p.querySelectorAll('article,[role="article"]').length;
-    if(reels>=2||arts>=1)break;
-    if(p.children&&p.children.length>6)break;
+    var allLinks=p.querySelectorAll('a[href]').length;
+    if(reels>=2||arts>=1||allLinks>8)break;
+    if(p.children&&p.children.length>4)break;
     best=p;n=p;i++;
   }
   return best;
